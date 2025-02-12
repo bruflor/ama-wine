@@ -2,7 +2,7 @@ from sqlmodel import SQLModel, Field
 
 # Define the Interaction model
 class Interaction(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True) # Auto-incrementing int, should be changed for large scale projects to an uuid
+    id: int = Field(default=None, primary_key=True) # Auto-incrementing int, should be changed for large scale projects to an uuid
     question: str
     response: str
     second_sentence: str
