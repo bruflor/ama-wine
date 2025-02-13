@@ -5,7 +5,6 @@ from typing import List
 from fastapi import FastAPI, Request
 from sqlmodel import Session, select
 import requests
-from fastapi.responses import StreamingResponse
 
 #Files imports
 from database import create_db_and_tables, engine
@@ -40,21 +39,35 @@ def get_llm_response(question: str):
         return " ".join(full_resp).replace("\n ", "")
 
 
-# # Endpoint to handle user questions and return the answers
+# Endpoint to handle user questions and return the answers
 @app.post("/api/question")
 async def post_question(request: Request, query: QuestionRequest):
-    #TODO: add here the logic to save the interaction on db
     answer = get_llm_response(query.question)
-    resp = {"answer": answer}
 
+    # Log interaction
+    ip = request.client.host
+    #ideally the username, user id and location will come from the user auth model
+    with Session(engine) as session:
+        interaction = Interaction(
+            question=query.question,
+            response=answer,
+            ip=ip,
+            location=query.location,
+            username= "User name",
+            user_id= "1234",
+        )
+        session.add(interaction)
+        session.commit()
+
+
+    resp = {"answer": answer}
     return resp
-#
-#
+
 # Endpoint to retrieve the interactions saved on the DB
-# @app.get("/api/logs", response_model=List[Interaction])
-# async def get_logs():
-#     with Session(engine) as session:
-#         logs = session.exec(select(Interaction)).all()
-#         return logs
+@app.get("/api/logs", response_model=List[Interaction])
+async def get_logs():
+    with Session(engine) as session:
+        logs = session.exec(select(Interaction)).all()
+        return logs
 
 

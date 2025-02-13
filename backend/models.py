@@ -5,13 +5,13 @@ class Interaction(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True) # Auto-incrementing int, should be changed for large scale projects to an uuid
     question: str
     response: str
-    second_sentence: str
+    second_sentence: str | None = None
     ip: str
     location: str
-    #user_name is required in frontend
+    username: str
+    user_id: str
 
 # Define the question model for request body
 class QuestionRequest(SQLModel):
     question: str
-    ip: str
     location: str
