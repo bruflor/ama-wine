@@ -25,6 +25,17 @@ services:
       ama-wine:
         ipv4_address: 172.24.0.12
 
+  webapp:
+    container_name: frontend
+    build: ./frontend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - fastapi
+    networks:
+      ama-wine:
+        ipv4_address: 172.24.0.14
+
 volumes:
   ollama:
 networks:
