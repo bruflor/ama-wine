@@ -6,16 +6,3 @@ It allows users to submit questions and retrieve answers, along with a history o
 ## Features
 [//]: # (TODO: wip)
 
-## Requirements
-- Python 3.9+
-- Docker (optional, for containerized deployment)
-- Docker Compose (optional, for containerized deployment)
-
-## Installation
-
-1. Clone the repository
-2. Create a virtual environment
-   `python3 -m venv .venv`
-    `.venv/bin/activate` 
-
-[//]: # (TODO:  add option with docker and option without it)
