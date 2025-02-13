@@ -11,7 +11,6 @@ from database import create_db_and_tables, engine
 from models import Interaction, QuestionRequest
 
 llm_url = "http://172.24.0.10:11434"
-# TODO: list all endpoints to request in a separated file to became easier to change urls.
 
 # Lifespan to create the database and tables
 @asynccontextmanager
@@ -34,9 +33,8 @@ def get_llm_response(question: str):
         full_resp = []
         for line in stream.iter_content(2048):
             data = json.loads(line)
-            sentence = data["message"]["content"]
-            full_resp.append(sentence)
-        return " ".join(full_resp).replace("\n ", "")
+            full_resp.append(data)
+        return full_resp
 
 
 # Endpoint to handle user questions and return the answers
@@ -50,7 +48,7 @@ async def post_question(request: Request, query: QuestionRequest):
     with Session(engine) as session:
         interaction = Interaction(
             question=query.question,
-            response=answer,
+            answer=json.dumps(answer),
             ip=ip,
             location=query.location,
             username= "User name",
@@ -59,21 +57,22 @@ async def post_question(request: Request, query: QuestionRequest):
         session.add(interaction)
         session.commit()
 
-
     resp = {"answer": answer}
     return resp
-
-# Endpoint to retrieve the interactions saved on the DB
+#
+# # Endpoint to retrieve the interactions saved on the DB
 @app.get("/api/logs", response_model=List[Interaction])
 async def get_logs():
     with Session(engine) as session:
         logs = session.exec(select(Interaction)).all()
-        return logs
 
+        return logs
+#
 @app.get("/api/logs/{log_id}", response_model=Interaction)
 async def get_log(log_id: int):
     with Session(engine) as session:
         log = session.get(Interaction, log_id)
+
         if not log:
             raise HTTPException(status_code=404, detail="Log not found")
         return log
