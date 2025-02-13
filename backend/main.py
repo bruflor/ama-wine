@@ -1,9 +1,8 @@
 # System imports
 import json
 from contextlib import asynccontextmanager
-from http.client import HTTPException
 from typing import List
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from sqlmodel import Session, select
 import requests
 
