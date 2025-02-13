@@ -1,6 +1,7 @@
 # System imports
 import json
 from contextlib import asynccontextmanager
+from http.client import HTTPException
 from typing import List
 from fastapi import FastAPI, Request
 from sqlmodel import Session, select
@@ -70,4 +71,10 @@ async def get_logs():
         logs = session.exec(select(Interaction)).all()
         return logs
 
-
+@app.get("/api/logs/{log_id}", response_model=Interaction)
+async def get_log(log_id: int):
+    with Session(engine) as session:
+        log = session.get(Interaction, log_id)
+        if not log:
+            raise HTTPException(status_code=404, detail="Log not found")
+        return log

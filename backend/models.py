@@ -14,4 +14,4 @@ class Interaction(SQLModel, table=True):
 # Define the question model for request body
 class QuestionRequest(SQLModel):
     question: str
-    location: str
+    location: str #ideally this will come from the user model, but for now will come from the browser
