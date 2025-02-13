@@ -8,6 +8,7 @@ import {AppBar} from "./components/AppBar.tsx";
 import {Hero} from "./components/Hero.tsx";
 import {SuggestionsContainer} from "./components/SuggestionsContainer.tsx";
 import {ContentContainer} from "./components/ContentContainer.tsx";
+import {Footer} from "./components/Footer.tsx";
 
 const mockSuggestions = [
     {
@@ -26,12 +27,12 @@ function App() {
     const isQuestionAsked = false
 
     // Derivated state from the last 6 logs
-    const suggestions = mockSuggestions.length === 0 ? [] : mockSuggestions.slice(0,5).map((suggestion) => {
+    const suggestions = mockSuggestions.length === 0 ? [] : mockSuggestions.slice(0, 5).map((suggestion) => {
         return {
             id: suggestion.id,
             username: suggestion.username,
-            question:suggestion.question,
-            location:suggestion.location,
+            question: suggestion.question,
+            location: suggestion.location,
         }
     })
 
@@ -42,7 +43,9 @@ function App() {
             <Box>
                 <AppBar/>
                 <Hero variant={isQuestionAsked ? "small" : "full"}/>
-                <main>
+                <Box sx={{
+                    padding: {xs: "2rem", sm: "3rem", md: "4rem"},
+                }}>
                     {/*{isQuestionAsked === undefined && <Typography>Loading...</Typography>}*/}
 
                     {isQuestionAsked === false &&
@@ -50,7 +53,8 @@ function App() {
 
                     {/*{isQuestionAsked === true && <ContentContainer />}*/}
 
-                </main>
+                </Box>
+                <Footer/>
             </Box>
 
         </ThemeProvider>

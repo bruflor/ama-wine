@@ -14,7 +14,7 @@ type suggestion = {
 
 export const SuggestionsContainer = ({suggestions = [], onSelect}: ISuggestionsContainerProps) => {
     return (
-        <Container maxWidth={false} sx={{padding: {sm: "3rem", md: "4rem", display:"flex", flexDirection:"column", gap:"48px"}}}>
+        <Container maxWidth={false} sx={{ display:"flex", flexDirection:"column", gap:"48px"}}>
             <Box id={'title'} sx={{display: "flex", flexDirection: "column", gap: "8px"}}>
                 <Typography variant="h3" sx={{color: "textColor.dark", fontWeight: 600}}>
                     Suggestions
