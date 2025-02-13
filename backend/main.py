@@ -1,15 +1,18 @@
 # System imports
+import json
 from contextlib import asynccontextmanager
 from typing import List
 from fastapi import FastAPI, Request
 from sqlmodel import Session, select
 import requests
+from fastapi.responses import StreamingResponse
 
 #Files imports
 from database import create_db_and_tables, engine
 from models import Interaction, QuestionRequest
 
 llm_url = "http://172.24.0.10:11434"
+# TODO: list all endpoints to request in a separated file to became easier to change urls.
 
 # Lifespan to create the database and tables
 @asynccontextmanager
@@ -19,24 +22,32 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-#Testing ollama llm
-@app.get("/api")
-def getlosd():
-    ollamo = requests.get(f"{llm_url}/api/tags")
-    return ollamo.json()
-
 # Get LLM response using Ollama
-# def get_llm_response(question: str) -> str:
-#     response = requests.get(f"{llm_url}/").json()
-#     print(response)
-#     return response
+def get_llm_response(question: str):
+    with requests.post(f"{llm_url}/api/chat", json={
+        "model": "llama2:latest",
+        "messages": [
+            {
+                "role": "user",
+                "content": question
+            }]
+    }, stream=True) as stream:
+        full_resp = []
+        for line in stream.iter_content(2048):
+            data = json.loads(line)
+            sentence = data["message"]["content"]
+            full_resp.append(sentence)
+        return " ".join(full_resp).replace("\n ", "")
 
 
 # # Endpoint to handle user questions and return the answers
-# @app.post("/api/question")
-# async def post_question(request: Request, query: QuestionRequest):
-#     #TODO: add here the logic to save the interaction on db
-#     return get_llm_response(query.question)
+@app.post("/api/question")
+async def post_question(request: Request, query: QuestionRequest):
+    #TODO: add here the logic to save the interaction on db
+    answer = get_llm_response(query.question)
+    resp = {"answer": answer}
+
+    return resp
 #
 #
 # Endpoint to retrieve the interactions saved on the DB
