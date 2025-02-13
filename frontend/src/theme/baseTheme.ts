@@ -9,6 +9,9 @@ declare module '@mui/material' {
 }
 
 export const baseTheme = createTheme({
+    typography:{
+        fontFamily: 'Inter, sans-serif',
+    },
     palette: {
         primary: {
             light: '#FFFFFF',
@@ -31,6 +34,15 @@ export const baseTheme = createTheme({
             main: '#767676',
             dark:'#2C2C2C',
         }
-
+    },
+    components: {
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    textTransform: 'none',
+                    borderRadius:"8px"
+                }
+            }
+        }
     }
 });
