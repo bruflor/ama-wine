@@ -30,11 +30,11 @@ export const AppBar = () => {
         <MuiAppBar position="static" sx={{
             minHeight: "99px",
             backgroundColor: "bgColor.main",
-            borderBottom: "1px",
-            borderColor: "borderColor.light"
+
         }} variant="outlined">
             <Container maxWidth={false}>
-                <Toolbar disableGutters sx={{alignItems: "center", padding: "24px", justifyContent: "space-between"}}>
+                <Toolbar disableGutters sx={{alignItems: "center", padding: "24px", justifyContent: "space-between",  borderBottom: "1px",
+                    borderColor: "borderColor.light"}}>
                     <Box><img src={figmaLogo}/></Box>
 
                     {/*Menu for big screens*/}
