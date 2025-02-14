@@ -132,7 +132,7 @@ export const Footer = () => {
                  sx={{width: {sm: "100%", md: "25%"}, display: "flex", flexDirection: "column", gap: "12px"}}>
                 <Typography sx={{fontWeight: 600, fontSize: "inherit", marginBottom: "18px"}}>Use cases</Typography>
                 {useCasesLinks.map((link) => (
-                    <Link href={link.path} color="inherit" sx={{
+                    <Link key={link.label} href={link.path} color="inherit" sx={{
                         fontSize: "inherit", textDecoration: "none"
                     }}>
                         {link.label}
@@ -143,7 +143,7 @@ export const Footer = () => {
                  sx={{width: {sm: "100%", md: "25%"}, display: "flex", flexDirection: "column", gap: "12px"}}>
                 <Typography sx={{fontWeight: 600, fontSize: "inherit", marginBottom: "18px"}}>Explore</Typography>
                 {exploreLinks.map((link) => (
-                    <Link href={link.path} color="inherit" sx={{
+                    <Link key={link.label} href={link.path} color="inherit" sx={{
                         fontSize: "inherit", textDecoration: "none"
                     }}>
                         {link.label}
@@ -154,7 +154,7 @@ export const Footer = () => {
                  sx={{width: {sm: "100%", md: "25%"}, display: "flex", flexDirection: "column", gap: "12px"}}>
                 <Typography sx={{fontWeight: 600, fontSize: "inherit", marginBottom: "18px"}}>Resources</Typography>
                 {resourcesLinks.map((link) => (
-                    <Link href={link.path} color="inherit" sx={{
+                    <Link key={link.label} href={link.path} color="inherit" sx={{
                         fontSize: "inherit", textDecoration: "none"
                     }}>
                         {link.label}
