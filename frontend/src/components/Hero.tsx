@@ -19,7 +19,7 @@ export const Hero = ({variant}: IHeroProps) => {
             alignItems: 'center',
             textAlign:'center'
         }}>
-            <Typography variant="h1">Everything about wine</Typography>
+            <Typography variant="h1" sx={{fontSize: !isFull ? "48px" : undefined}}>Everything about wine</Typography>
             <Typography variant="h2" sx={{color: "textColor.main"}}>What would you like to know?</Typography>
             {isFull && <TextField
                 id="search-bar-round"
