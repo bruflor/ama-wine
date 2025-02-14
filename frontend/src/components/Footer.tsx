@@ -145,7 +145,8 @@ export const Footer = () => {
                 {exploreLinks.map((link) => (
                     <Link href={link.path} color="inherit" sx={{
                         fontSize: "inherit", textDecoration: "none"
-                    }}>                        {link.label}
+                    }}>
+                        {link.label}
                     </Link>
                 ))}
             </Box>
@@ -155,7 +156,8 @@ export const Footer = () => {
                 {resourcesLinks.map((link) => (
                     <Link href={link.path} color="inherit" sx={{
                         fontSize: "inherit", textDecoration: "none"
-                    }}>                        {link.label}
+                    }}>
+                        {link.label}
                     </Link>
                 ))}
             </Box>
