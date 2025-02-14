@@ -14,7 +14,7 @@ type suggestion = {
 
 export const SuggestionsContainer = ({suggestions = [], onSelect}: ISuggestionsContainerProps) => {
     return (
-        <Container maxWidth={false} sx={{ display:"flex", flexDirection:"column", gap:"48px"}}>
+        <Container maxWidth={false} sx={{ display:"flex", flexDirection:"column", gap:"48px", marginBottom:"64px"}}>
             <Box id={'title'} sx={{display: "flex", flexDirection: "column", gap: "8px"}}>
                 <Typography variant="h3" sx={{color: "textColor.dark", fontWeight: 600}}>
                     Suggestions
@@ -24,9 +24,11 @@ export const SuggestionsContainer = ({suggestions = [], onSelect}: ISuggestionsC
                 </Typography>
             </Box>
 
-            <Box>
+            <Box sx={{ display:"flex", gap:"24px", flexWrap:"wrap"}}>
                 {suggestions?.length > 0 && suggestions?.map((suggestion) => (
-                    <Card variant="outlined" sx={{borderRadius:"8px",minWidth:"300px", width:"33%"}}>
+                    <Card variant="outlined" sx={{borderRadius:"8px",minWidth:"300px",
+                        flex: "1 0 30%", maxWidth: {xs:"100%",md:"30%"}, height:"fit-content"
+                    }}>
                         <CardActionArea
                             onClick={() => onSelect(suggestion.id)}
                         >
