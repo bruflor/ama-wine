@@ -26,7 +26,7 @@ export const SuggestionsContainer = ({suggestions = [], onSelect}: ISuggestionsC
 
             <Box sx={{ display:"flex", gap:"24px", flexWrap:"wrap"}}>
                 {suggestions?.length > 0 && suggestions?.map((suggestion) => (
-                    <Card variant="outlined" sx={{borderRadius:"8px",minWidth:"300px",
+                    <Card key={suggestion.id} variant="outlined" sx={{borderRadius:"8px",minWidth:"300px",
                         flex: "1 0 30%", maxWidth: {xs:"100%",md:"30%"}, height:"fit-content"
                     }}>
                         <CardActionArea
