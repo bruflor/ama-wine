@@ -22,8 +22,24 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+# Guessing some topics related
+ALLOWED_TOPICS = ["wine","wines", "vineyard", "grape", "pairing", "pairing", "tasting", "flavors", "region", "variety", "varieties", "sommelier",
+    "chardonnay", "cabernet", "pinot", "merlot", "syrah", "sauvignon", "riesling",
+    "sparkling", "champagne", "prosecco", "port", "sherry", "zinfandel",
+    "bordeaux", "burgundy", "napa", "tuscany", "rioja", "barolo", "chianti"]
+
+DEFAULT_RESPONSE = "I'm sorry, I can only answer questions related to wine knowledge. Please ask a question about wine."
+
+def validate_question(question: str) -> bool:
+    # Check if the question is relevant to wine knowledge.
+    question_lower = question.lower()
+    return any(topic in question_lower for topic in ALLOWED_TOPICS)
+
 # Get LLM response using Ollama
 def get_llm_response(question: str):
+    if not validate_question(question):
+        return DEFAULT_RESPONSE
+
     # Define the prompt with context and examples
     prompt = f"""
         You are a knowledgeable and experienced sommelier with expertise in wine varieties, regions, pairings, and tasting notes. Your task is to provide accurate, detailed, and helpful answers to questions about wine. If you are unsure about an answer, say so instead of guessing. And if the question is not relate to wine say so instead of answering.
