@@ -33,7 +33,7 @@ export const useLogs = () => {
             const formatted = logs.map((log: { answer: string;created_at:string }) => {
                 return {
                     ...log,
-                    created_at: new Date(log.created_at).toDateString(),
+                    created_at: new Date(log.created_at).toLocaleString(),
                     answer: JSON.parse(log.answer)
                 }
             })
