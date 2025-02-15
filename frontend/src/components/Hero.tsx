@@ -1,11 +1,12 @@
-import {Container, InputAdornment, TextField, Typography} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import {Container, Typography} from "@mui/material";
+import {PromptInput} from "./PromptInput.tsx";
 
 interface IHeroProps {
-    variant: "small" | "full"
+    variant: "small" | "full",
+    onAskQuestion: (question: string) => void,
 }
 
-export const Hero = ({variant}: IHeroProps) => {
+export const Hero = ({variant, onAskQuestion}: IHeroProps) => {
     const isFull = variant === "full";
 
     return (
@@ -21,28 +22,7 @@ export const Hero = ({variant}: IHeroProps) => {
         }}>
             <Typography variant="h1" sx={{fontSize: !isFull ? "48px" : undefined}}>Everything about wine</Typography>
             <Typography variant="h2" sx={{color: "textColor.main"}}>What would you like to know?</Typography>
-            {isFull && <TextField
-                id="search-bar-round"
-                placeholder="A question, a curiosity, anything you would like to know"
-                slotProps={{
-                    input: {
-                        endAdornment: (
-                            <InputAdornment position="end" sx={{color: "textColor.dark"}}>
-                                <SearchIcon/>
-                            </InputAdornment>
-                        ),
-                    },
-                }}
-                variant="outlined"
-                sx={{
-                    marginY: "24px",
-                    minWidth: {sm:'100%', md:'500px'},
-                    '& .MuiOutlinedInput-root': {
-                        backgroundColor: 'white',
-                        borderRadius: '64px',
-                        borderColor: "borderColor.light"
-                    }
-                }}/>}
+            {isFull && (<PromptInput variant="small" onSubmit={onAskQuestion} isDisabled={!isFull}/>)}
         </Container>
     )
 }

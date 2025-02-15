@@ -1,16 +1,22 @@
 import React, {useLayoutEffect, useRef} from "react";
-import {Box, TextField, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
-import {IAnswer} from "../pages/useLogs.ts";
+import {IAnswer} from "../hooks/useLogs.ts";
+import {PromptInput} from "./PromptInput.tsx";
 
 interface IContentContainerProps {
     messages: IAnswer[] | [];
-    question?: string
+    question?: string;
+    onAskQuestion: (question: string) => void;
 }
 
-// This component is simulating a streamed response
+/**
+ * Simulates a streamed response for message display, rendering the message in chunks of words to mimic a real-time chat experience.
+ * This approach, using `setInterval`, improves the user experience by displaying the message word by word,
+ * as if it were being typed in real time.
+ */
 
-export const ContentContainer = ({question, messages = []}: IContentContainerProps) => {
+export const ContentContainer = ({onAskQuestion, question, messages = []}: IContentContainerProps) => {
     const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
     const [currentMessage, setCurrentMessage] = useState(" ");
     const [isDone, setIsDone] = useState(false);
@@ -64,7 +70,7 @@ export const ContentContainer = ({question, messages = []}: IContentContainerPro
 
     useLayoutEffect(() => {
         window.scrollTo(0, 0);
-    }, [location]);
+    }, [messages]);
 
     const paragraphs = currentMessage.split("\n\n");
 
@@ -96,14 +102,7 @@ export const ContentContainer = ({question, messages = []}: IContentContainerPro
 
             <Box>
                 <Typography>What would you like to know:</Typography>
-                <TextField
-                    fullWidth
-                    multiline
-                    minRows={2}
-                    maxRows={6}
-                    sx={{borderRadius: "8px", marginTop: "8px"}}
-                    disabled={!isDone}
-                />
+                <PromptInput variant={"large"} onSubmit={onAskQuestion} isDisabled={!isDone} />
             </Box>
         </Box>
     );
