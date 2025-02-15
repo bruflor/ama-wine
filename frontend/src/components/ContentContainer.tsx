@@ -1,11 +1,11 @@
 import React, {useLayoutEffect, useRef} from "react";
-import {Box, Typography} from "@mui/material";
+import {Box, CircularProgress, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import {IAnswer} from "../hooks/useLogs.ts";
 import {PromptInput} from "./PromptInput.tsx";
 
 interface IContentContainerProps {
-    messages: IAnswer[] | [];
+    answer?: IAnswer[];
     question?: string;
     onAskQuestion: (question: string) => void;
 }
@@ -16,43 +16,51 @@ interface IContentContainerProps {
  * as if it were being typed in real time.
  */
 
-export const ContentContainer = ({onAskQuestion, question, messages = []}: IContentContainerProps) => {
+export const ContentContainer = ({onAskQuestion, question, answer}: IContentContainerProps) => {
     const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
     const [currentMessage, setCurrentMessage] = useState(" ");
     const [isDone, setIsDone] = useState(false);
 
     const divRef = useRef<HTMLDivElement>(null);
 
+    const handleNewQuestion = (question: string) => {
+        setIsDone(false);
+        setCurrentMessageIndex(0);
+        setCurrentMessage(" ")
+        onAskQuestion(question);
+    }
+
     useEffect(() => {
-        if (isDone) return;
+        if (isDone || !answer) return;
 
         const interval = setInterval(() => {
             setCurrentMessageIndex((prevIndex) => {
                 const nextIndex = prevIndex + 1;
 
                 // Check if the next index is out of bounds
-                if (nextIndex >= messages.length) {
+                if (nextIndex >= answer.length) {
                     setIsDone(true);
                     clearInterval(interval);
                     return prevIndex;
                 }
 
                 // Check if the next message is the last one (done is true)
-                if (messages[nextIndex].done) {
+                if (answer[nextIndex].done) {
                     setIsDone(true);
                     clearInterval(interval);
                 }
 
                 return nextIndex;
             });
-        }, 100);
+        }, 20);
 
         return () => clearInterval(interval);
-    }, [isDone, messages.length]);
+    }, [isDone, answer]);
 
     useEffect(() => {
-        if (currentMessageIndex < messages.length) {
-            const newMessageContent = messages[currentMessageIndex].message.content;
+        if (!answer) return
+        if (currentMessageIndex < answer.length) {
+            const newMessageContent = answer[currentMessageIndex].message.content;
 
             setCurrentMessage((prevMessage) => {
                 // Avoid appending the same message twice
@@ -66,11 +74,11 @@ export const ContentContainer = ({onAskQuestion, question, messages = []}: ICont
             divRef.current.scrollTop = divRef.current.scrollHeight;
         }
 
-    }, [currentMessageIndex, messages]);
+    }, [currentMessageIndex, answer]);
 
     useLayoutEffect(() => {
         window.scrollTo(0, 0);
-    }, [messages]);
+    }, [answer]);
 
     const paragraphs = currentMessage.split("\n\n");
 
@@ -88,21 +96,30 @@ export const ContentContainer = ({onAskQuestion, question, messages = []}: ICont
     };
 
     return (
-        <Box sx={{flexGrow: 1, display: "flex", flexDirection: "column", gap: "48px"}}>
-            <Box sx={{display: "flex", flexDirection: "column", gap: "8px",
-                maxHeight:"300px", overflowY: "auto"
-            }} ref={divRef}>
-                <Typography variant={"h2"} sx={{fontSize: "24px", fontWeight: 600}}>{question}</Typography>
-                {paragraphs.map((paragraph, index) => (
+        <Box sx={{flexGrow: 1, display: "flex", flexDirection: "column", gap: "16px"}}>
+            <Typography variant={"h2"} sx={{fontSize: "24px", fontWeight: 600}}>{question}</Typography>
+            <Box ref={divRef} sx={{
+                display: "flex", flexDirection: "column", gap: "8px",
+                maxHeight: "400px", overflowY: "auto",
+                scrollbarColor: '#d9d9d9 #fff',
+                scrollbarWidth: 'thin',
+            }}>
+                {currentMessageIndex > 0 && paragraphs.map((paragraph, index) => (
                     <React.Fragment key={index}>
                         {formatParagraph(paragraph)}
                     </React.Fragment>
                 ))}
             </Box>
 
-            <Box>
+            {/*Loading purpose*/}
+            {currentMessageIndex === 0 && <Box sx={{display: "flex", gap: "24px", alignItems: "center"}}>
+                <CircularProgress size="30px"/>
+                <Typography>Just a second, the response may take a little longer than usual.</Typography>
+            </Box>}
+
+            <Box sx={{marginTop:"32px"}}>
                 <Typography>What would you like to know:</Typography>
-                <PromptInput variant={"large"} onSubmit={onAskQuestion} isDisabled={!isDone} />
+                <PromptInput variant={"large"} onSubmit={handleNewQuestion} isDisabled={!isDone}/>
             </Box>
         </Box>
     );
