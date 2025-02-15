@@ -22,10 +22,10 @@ export const Home = () => {
 
     const handleAskQuestion = async (question: string) => {
         try {
-
             const response = await fetch('api/question', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
+                // This location should be retrieved by a Geolocation service or even better populated by the logged user data in the backend.
                 body: JSON.stringify({question: question, location: "Lisbon"}),
             });
 
@@ -42,6 +42,7 @@ export const Home = () => {
         }
 
     }
+
     // Derivative state from the last 6 logs
     const suggestions = logs && logs.length > 0 ? logs.slice(0, 6) : [];
 

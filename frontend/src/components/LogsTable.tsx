@@ -36,7 +36,7 @@ export const LogsTable = ({logs}:{logs?:ILogs[]}) => {
                 </TableHead>
                 <TableBody>
                     {logs.map((log) => (
-                        <Rows log={log}/>
+                        <Rows key={log.id} log={log}/>
                     ))}
                 </TableBody>
             </Table>
@@ -83,7 +83,7 @@ const Rows = ({log}: { log: ILogs }) => {
                     <Collapse in={open} timeout="auto" unmountOnExit>
                             <Box sx={{marginY:"24px"}}>
                                 {answer.map(paragraph => (
-                                    <Typography fontSize="inherit">{paragraph}</Typography>
+                                    <Typography key={paragraph} fontSize="inherit">{paragraph}</Typography>
                                     )
                                 )}
                             </Box>
