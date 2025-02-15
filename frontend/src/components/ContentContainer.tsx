@@ -20,6 +20,7 @@ export const ContentContainer = ({onAskQuestion, question, answer}: IContentCont
     const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
     const [currentMessage, setCurrentMessage] = useState(" ");
     const [isDone, setIsDone] = useState(false);
+    const isLoading = answer === undefined;
 
     const divRef = useRef<HTMLDivElement>(null);
 
@@ -104,7 +105,7 @@ export const ContentContainer = ({onAskQuestion, question, answer}: IContentCont
                 scrollbarColor: '#d9d9d9 #fff',
                 scrollbarWidth: 'thin',
             }}>
-                {currentMessageIndex > 0 && paragraphs.map((paragraph, index) => (
+                {!isLoading && paragraphs.map((paragraph, index) => (
                     <React.Fragment key={index}>
                         {formatParagraph(paragraph)}
                     </React.Fragment>
@@ -112,7 +113,7 @@ export const ContentContainer = ({onAskQuestion, question, answer}: IContentCont
             </Box>
 
             {/*Loading purpose*/}
-            {currentMessageIndex === 0 && <Box sx={{display: "flex", gap: "24px", alignItems: "center"}}>
+            {isLoading && <Box sx={{display: "flex", gap: "24px", alignItems: "center"}}>
                 <CircularProgress size="30px"/>
                 <Typography>Just a second, the response may take a little longer than usual.</Typography>
             </Box>}
