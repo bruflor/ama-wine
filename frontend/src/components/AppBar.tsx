@@ -9,7 +9,7 @@ import {
     Toolbar,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
-import figmaLogo from "../../public/figma.svg"
+import figmaLogo from "../assets/figma.svg"
 
 import {useState, MouseEvent} from "react";
 

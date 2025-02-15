@@ -1,9 +1,9 @@
 import {Box, Link, Typography} from "@mui/material";
-import figmaLogo from "../../public/figma.svg"
-import igLogo from "../../public/instagram.svg"
-import linkedInLogo from "../../public/linkedIn.svg"
-import youtubeLogo from "../../public/youTube.svg"
-import xLogo from "../../public/x.svg"
+import figmaLogo from "../assets/figma.svg"
+import igLogo from "../assets/instagram.svg"
+import linkedInLogo from "../assets/linkedIn.svg"
+import youtubeLogo from "../assets/youTube.svg"
+import xLogo from "../assets/x.svg"
 
 
 const useCasesLinks = [
