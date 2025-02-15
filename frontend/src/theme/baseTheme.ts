@@ -60,5 +60,12 @@ export const baseTheme = createTheme({
 
             ]
         },
+        MuiTableCell:{
+            styleOverrides:{
+                root:{
+                    fontSize:"1rem"
+                }
+            }
+        }
     }
 });

@@ -8,6 +8,7 @@ import {
     MenuItem,
     Toolbar,
 } from '@mui/material'
+import {Link} from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
 import figmaLogo from "../assets/figma.svg"
 
@@ -35,7 +36,7 @@ export const AppBar = () => {
             <Container maxWidth={false}>
                 <Toolbar disableGutters sx={{alignItems: "center", padding: "24px", justifyContent: "space-between",  borderBottom: "1px",
                     borderColor: "borderColor.light"}}>
-                    <Box><img src={figmaLogo}/></Box>
+                    <Box component={Link} to="/"><img src={figmaLogo}/></Box>
 
                     {/*Menu for big screens*/}
                     <Box id="menu-big"

@@ -1,14 +1,16 @@
 import {useEffect, useState} from "react";
 
 export interface ILogs {
-    "ip": string,
-    "username": string,
-    "answer": IAnswer[],
-    "second_sentence"?: string,
-    "id": number,
-    "question": string,
-    "location": string,
-    "user_id": string
+    id: number,
+    user_id: string,
+    username: string,
+    location: string,
+    ip: string,
+    question: string,
+    answer: IAnswer[],
+    second_sentence?: string,
+    created_at:string,
+
 }
 
 export interface IAnswer {
@@ -28,9 +30,10 @@ export const useLogs = () => {
     const getLogs = async () => {
         try {
             const logs = await fetch("api/logs").then((res) => res.json())
-            const formatted = logs.map((log: { answer: string; }) => {
+            const formatted = logs.map((log: { answer: string;created_at:string }) => {
                 return {
                     ...log,
+                    created_at: new Date(log.created_at).toDateString(),
                     answer: JSON.parse(log.answer)
                 }
             })
