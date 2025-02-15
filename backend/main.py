@@ -118,3 +118,13 @@ async def get_log(log_id: int):
         if not log:
             raise HTTPException(status_code=404, detail="Log not found")
         return log
+
+@app.delete("/api/logs/{log_id}", response_model=Interaction)
+async def delete_log(log_id: int):
+    with Session(engine) as session:
+        log = session.get(Interaction, log_id)
+        if not log:
+            raise HTTPException(status_code=404, detail="Log not found")
+        session.delete(log)
+        session.commit()
+        return log
