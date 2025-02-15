@@ -24,12 +24,27 @@ app = FastAPI(lifespan=lifespan)
 
 # Get LLM response using Ollama
 def get_llm_response(question: str):
+    # Define the prompt with context and examples
+    prompt = f"""
+        You are a knowledgeable and experienced sommelier with expertise in wine varieties, regions, pairings, and tasting notes. Your task is to provide accurate, detailed, and helpful answers to questions about wine. If you are unsure about an answer, say so instead of guessing. And if the question is not relate to wine say so instead of answering.
+
+        Examples:
+        Question: What are the best wine pairings for grilled steak?
+        Answer: Grilled steak pairs well with full-bodied red wines such as Cabernet Sauvignon, Malbec, or Syrah. These wines have bold tannins and rich flavors that complement the charred and savory notes of the steak.
+
+        Question: What is the difference between Old World and New World wines?
+        Answer: Old World wines (from Europe) tend to be more terroir-driven, with earthy and mineral flavors, while New World wines (from regions like the US, Australia, and South America) are often fruit-forward and higher in alcohol content.
+
+        Question: {question}
+        Answer:
+        """
+
     with requests.post(f"{llm_url}/api/chat", json={
         "model": "llama2:latest",
         "messages": [
             {
                 "role": "user",
-                "content": question
+                "content": prompt
             }]
     }, stream=True) as stream:
         full_resp = []
