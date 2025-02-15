@@ -1,4 +1,5 @@
 from sqlmodel import SQLModel, Field
+from datetime import datetime
 
 # Define the Interaction model
 class Interaction(SQLModel, table=True):
@@ -10,6 +11,7 @@ class Interaction(SQLModel, table=True):
     location: str
     username: str
     user_id: str
+    created_at: datetime = datetime.now()
 
 # Define the question model for request body
 class QuestionRequest(SQLModel):

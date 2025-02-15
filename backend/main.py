@@ -4,6 +4,8 @@ from contextlib import asynccontextmanager
 from typing import List
 from fastapi import FastAPI, Request, HTTPException
 from sqlmodel import Session, select
+from sqlalchemy import desc
+
 import requests
 
 #Files imports
@@ -64,7 +66,7 @@ async def post_question(request: Request, query: QuestionRequest):
 @app.get("/api/logs", response_model=List[Interaction])
 async def get_logs():
     with Session(engine) as session:
-        logs = session.exec(select(Interaction)).all()
+        logs = session.exec(select(Interaction).order_by(desc(Interaction.created_at))).all()
 
         return logs
 #
