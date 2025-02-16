@@ -53,7 +53,7 @@ export const ContentContainer = ({onAskQuestion, question, answer}: IContentCont
 
                 return nextIndex;
             });
-        }, 20);
+        }, 100);
 
         return () => clearInterval(interval);
     }, [isDone, answer]);
