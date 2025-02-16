@@ -3,13 +3,15 @@ import {ILogs} from "../hooks/useLogs.ts";
 import ReactApexChart from "react-apexcharts";
 import {ReactNode} from "react";
 
-// Simulating some data to populate dashboard
+// Simulating key metrics data to populate dashboard. Currently, the users and location are hardcoded between the services, backend and frontend, so will always render the same values
+
 export const KeyMetrics = ({logs}: { logs: ILogs[] }) => {
-    const colors = ["#B3B3B3", "#767676"]
+    const colors = ["#878787", "#605f5f"]
     const chartsHeight = 160
+
     // Most active users
     const userInteractionCounts = logs.reduce((acc, log) => {
-        acc[log.user_id] = (acc[log.user_id] || 0) + 1;
+        acc[log.username] = (acc[log.username] || 0) + 1;
         return acc;
     }, {} as Record<string, number>);
     const mostActiveUsers = Object.entries(userInteractionCounts)
