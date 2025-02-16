@@ -77,13 +77,13 @@ To access the frontend, navigate to http://localhost:8080.
 - The main page allows users to ask questions about wine.
 - If the database is populated, you'll see suggested questions. Otherwise, the suggestions section will be empty.
 
-![Main Page](https://github.com/bruflor/)
+![Main Page](https://github.com/bruflor/ama-wine/blob/main/screenshots/home.png)
 
 #### Asking Questions
 - After submitting a question, the interface will update to display your question and the LLM-generated answer.
 - **Note:** The response time depends on the LLM and may not be instantaneous.
 
-![Question Page](https://github.com/bruflor/)
+![Question Page](https://github.com/bruflor/ama-wine/blob/main/screenshots/answer.png)
 
 #### Returning to Suggestions on Main
 - To return to the suggestions, reload the page (as the layout does not include a back or reset button).
@@ -93,7 +93,7 @@ To access the frontend, navigate to http://localhost:8080.
 - The dashboard displays analytics related to the questions asked that are mocked accordingly to the entries on database.
 - **Note:** The user module is not implemented, so features like username, location, and permissions are non-functional.
 
-![Dashboard](https://github.com/bruflor/)
+![Dashboard](https://github.com/bruflor/ama-wine/blob/main/screenshots/dashboard.png)
 
 ### Backend
 
