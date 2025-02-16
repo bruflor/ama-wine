@@ -105,3 +105,4 @@ To explore the backend API, visit http://localhost:8000/docs. This page provides
 - Two additional endpoints are available but not implemented in the frontend:
    - `GET /api/logs/{logid}`
    - `DELETE /api/logs/{logid}`
+![Fastpi docs](https://github.com/bruflor/ama-wine/blob/main/screenshots/fastapi-docs.png)
