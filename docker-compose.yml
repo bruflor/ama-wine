@@ -38,6 +38,8 @@ services:
 
 volumes:
   ollama:
+  fastapi:
+  webapp:
 networks:
   ama-wine:
     name: ama-wine
