@@ -8,7 +8,13 @@ export const Dashboard = () => {
     const {logs} = useLogs();
     // Adding an early return to prevent processing
     if (!logs || logs.length === 0) {
-        return <div>No logs available.</div>;
+        return (
+            <Box sx={{
+                padding: {xs: "2rem", sm: "3rem", md: "4rem"},
+                display: "flex", flexDirection: "column", gap: "24px"
+            }}>
+                No logs available.
+            </Box>);
     }
 
 
@@ -21,9 +27,10 @@ export const Dashboard = () => {
                 display: "flex", flexDirection: "column", gap: "24px"
             }}>
                 <Typography variant={"h2"} sx={{fontSize: "24px", fontWeight: 600}}>Key metrics</Typography>
-                <KeyMetrics logs={logs} />
+                <KeyMetrics logs={logs}/>
 
-                <Typography variant={"h2"} sx={{fontSize: "24px", fontWeight: 600, marginTop:"48px"}}>Users logs</Typography>
+                <Typography variant={"h2"} sx={{fontSize: "24px", fontWeight: 600, marginTop: "48px"}}>Users
+                    logs</Typography>
                 <LogsTable logs={logs}/>
             </Box>
         </>
